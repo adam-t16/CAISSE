@@ -272,6 +272,16 @@ class HistoriqueApp {
     }
 
     // Stock history
+    clearAllHistory() {
+        if (confirm("⚠️ Voulez-vous vraiment supprimer tout l'historique des ventes et du stock ?")) {
+            localStorage.removeItem('salesHistory');
+            localStorage.removeItem('stockHistory');
+            this.loadSalesHistory();
+            this.loadStockHistory();
+            this.updateFilteredStatistics();
+        }
+    }
+
     loadStockHistory() {
         const stockHistory = this.getStockHistory();
         this.filteredStock = [...stockHistory].reverse(); // Most recent first
@@ -545,6 +555,11 @@ class HistoriqueApp {
     }
 }
 
+// Initialize historique app
+const historique = new HistoriqueApp();
+
+// Make historique globally available for inline event handlers
+window.historique = historique;
 // Initialize historique app
 const historique = new HistoriqueApp();
 
