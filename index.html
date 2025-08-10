@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caisse - Point de Vente</title>
+    <link rel="stylesheet" href="src/styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <h1 class="nav-title">
+                <i class="fas fa-cash-register"></i>
+                Caisse
+            </h1>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link active">
+                    <i class="fas fa-shopping-cart"></i>
+                    Vente
+                </a>
+                <a href="admin.html" class="nav-link">
+                    <i class="fas fa-cog"></i>
+                    Admin
+                </a>
+                <a href="historique.html" class="nav-link">
+                    <i class="fas fa-history"></i>
+                    Historique
+                </a>
+                <button id="theme-toggle" class="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="scanner-section">
+                <div class="card">
+                    <h2 class="card-title">
+                        <i class="fas fa-barcode"></i>
+                        Scanner Produit
+                    </h2>
+                    <div class="scanner-controls">
+                        <div class="input-group">
+                            <input type="text" id="barcode-input" placeholder="Saisir ou scanner le code-barres" class="input-field">
+                            <button id="manual-add" class="btn btn-primary">
+                                <i class="fas fa-plus"></i>
+                                Ajouter
+                            </button>
+                        </div>
+                        <button id="camera-scan" class="btn btn-secondary">
+                            <i class="fas fa-camera"></i>
+                            Scanner avec caméra
+                        </button>
+                    </div>
+                    <div id="scanner-container" class="scanner-container hidden">
+                        <div id="reader"></div>
+                        <button id="stop-scan" class="btn btn-danger">
+                            <i class="fas fa-times"></i>
+                            Arrêter le scan
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cart-section">
+                <div class="card">
+                    <h2 class="card-title">
+                        <i class="fas fa-shopping-basket"></i>
+                        Panier
+                        <span id="cart-count" class="cart-count">0</span>
+                    </h2>
+                    <div class="cart-items" id="cart-items">
+                        <div class="empty-cart">
+                            <i class="fas fa-shopping-cart empty-icon"></i>
+                            <p>Votre panier est vide</p>
+                        </div>
+                    </div>
+                    <div class="cart-total">
+                        <div class="total-row">
+                            <span>Total:</span>
+                            <span id="cart-total" class="total-amount">0.00 DH</span>
+                        </div>
+                        <div class="total-row benefit">
+                            <span>Bénéfice:</span>
+                            <span id="cart-benefit" class="benefit-amount">0.00 DH</span>
+                        </div>
+                    </div>
+                    <button id="checkout-btn" class="btn btn-success btn-large" disabled>
+                        <i class="fas fa-cash-register"></i>
+                        Encaisser
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal de paiement -->
+    <div id="payment-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Encaissement</h3>
+                <button id="close-modal" class="close-btn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="payment-summary">
+                    <div class="summary-row">
+                        <span>Total à payer:</span>
+                        <span id="payment-total" class="payment-amount">0.00 DH</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Bénéfice:</span>
+                        <span id="payment-benefit" class="benefit-amount">0.00 DH</span>
+                    </div>
+                </div>
+                <div class="payment-method">
+                    <label>Mode de paiement:</label>
+                    <select id="payment-method" class="select-field">
+                        <option value="cash">Espèces</option>
+                        <option value="card">Carte bancaire</option>
+                        <option value="mobile">Paiement mobile</option>
+                    </select>
+                </div>
+                <div class="cash-payment" id="cash-payment">
+                    <label>Montant reçu:</label>
+                    <input type="number" id="cash-received" class="input-field" step="0.01" min="0">
+                    <div class="change-amount">
+                        <span>Monnaie à rendre:</span>
+                        <span id="change-amount">0.00 DH</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="cancel-payment" class="btn btn-secondary">Annuler</button>
+                <button id="confirm-payment" class="btn btn-success">Confirmer le paiement</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+    <script src="src/script.js"></script>
+</body>
+</html>

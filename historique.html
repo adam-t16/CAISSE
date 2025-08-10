@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historique - Ventes et Stock</title>
+    <link rel="stylesheet" href="src/styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <h1 class="nav-title">
+                <i class="fas fa-cash-register"></i>
+                Caisse
+            </h1>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">
+                    <i class="fas fa-shopping-cart"></i>
+                    Vente
+                </a>
+                <a href="admin.html" class="nav-link">
+                    <i class="fas fa-cog"></i>
+                    Admin
+                </a>
+                <a href="historique.html" class="nav-link active">
+                    <i class="fas fa-history"></i>
+                    Historique
+                </a>
+                <button id="theme-toggle" class="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon sales">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="total-sales">0 DH</h3>
+                        <p>Chiffre d'affaires</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon profit">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="total-profit">0 DH</h3>
+                        <p>Bénéfices totaux</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon orders">
+                        <i class="fas fa-receipt"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="total-orders">0</h3>
+                        <p>Ventes totales</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon products">
+                        <i class="fas fa-box"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="products-sold">0</h3>
+                        <p>Produits vendus</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="history-tabs">
+                <button class="tab-btn active" data-tab="sales">
+                    <i class="fas fa-shopping-bag"></i>
+                    Historique des ventes
+                </button>
+                <button class="tab-btn" data-tab="stock">
+                    <i class="fas fa-warehouse"></i>
+                    Mouvements de stock
+                </button>
+            </div>
+
+            <div class="card">
+                <div class="history-controls">
+                    <div class="date-filters">
+                        <input type="date" id="date-from" class="input-field">
+                        <input type="date" id="date-to" class="input-field">
+                        <button id="filter-dates" class="btn btn-primary">
+                            <i class="fas fa-filter"></i>
+                            Filtrer
+                        </button>
+                        <button id="clear-filter" class="btn btn-secondary">
+                            <i class="fas fa-times"></i>
+                            Effacer
+                        </button>
+                    </div>
+                    <div class="export-controls">
+                        <button id="export-excel" class="btn btn-success">
+                            <i class="fas fa-file-excel"></i>
+                            Export Excel
+                        </button>
+                    </div>
+                </div>
+
+                <div id="sales-tab" class="tab-content active">
+                    <div class="table-container">
+                        <table id="sales-table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Heure</th>
+                                    <th>Articles</th>
+                                    <th>Total</th>
+                                    <th>Bénéfice</th>
+                                    <th>Paiement</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="sales-tbody">
+                                <!-- Les ventes seront ajoutées ici -->
+                            </tbody>
+                        </table>
+                        <div id="no-sales" class="empty-state">
+                            <i class="fas fa-chart-bar empty-icon"></i>
+                            <p>Aucune vente trouvée</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="stock-tab" class="tab-content">
+                    <div class="table-container">
+                        <table id="stock-table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Heure</th>
+                                    <th>Produit</th>
+                                    <th>Ancien stock</th>
+                                    <th>Nouveau stock</th>
+                                    <th>Variation</th>
+                                    <th>Motif</th>
+                                </tr>
+                            </thead>
+                            <tbody id="stock-tbody">
+                                <!-- Les mouvements de stock seront ajoutés ici -->
+                            </tbody>
+                        </table>
+                        <div id="no-stock" class="empty-state">
+                            <i class="fas fa-warehouse empty-icon"></i>
+                            <p>Aucun mouvement de stock trouvé</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal détail vente -->
+    <div id="sale-detail-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Détail de la vente</h3>
+                <button id="close-detail-modal" class="close-btn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="sale-details">
+                    <!-- Les détails seront ajoutés ici -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="print-receipt" class="btn btn-primary">
+                    <i class="fas fa-print"></i>
+                    Imprimer reçu
+                </button>
+                <button id="close-detail" class="btn btn-secondary">Fermer</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="src/historique.js"></script>
+</body>
+</html>

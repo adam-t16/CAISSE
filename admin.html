@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administration - Gestion Produits</title>
+    <link rel="stylesheet" href="src/styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <h1 class="nav-title">
+                <i class="fas fa-cash-register"></i>
+                Caisse
+            </h1>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">
+                    <i class="fas fa-shopping-cart"></i>
+                    Vente
+                </a>
+                <a href="admin.html" class="nav-link active">
+                    <i class="fas fa-cog"></i>
+                    Admin
+                </a>
+                <a href="historique.html" class="nav-link">
+                    <i class="fas fa-history"></i>
+                    Historique
+                </a>
+                <button id="theme-toggle" class="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="admin-header">
+                <h2>
+                    <i class="fas fa-box"></i>
+                    Gestion des Produits
+                </h2>
+                <button id="add-product-btn" class="btn btn-primary">
+                    <i class="fas fa-plus"></i>
+                    Ajouter un produit
+                </button>
+            </div>
+
+            <div class="card">
+                <div class="search-section">
+                    <div class="search-group">
+                        <input type="text" id="search-products" placeholder="Rechercher un produit..." class="input-field">
+                        <i class="fas fa-search search-icon"></i>
+                    </div>
+                </div>
+
+                <div class="products-table">
+                    <table id="products-table">
+                        <thead>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Code-barres</th>
+                                <th>Prix d'achat</th>
+                                <th>Prix de vente</th>
+                                <th>Stock</th>
+                                <th>Bénéfice</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="products-tbody">
+                            <!-- Les produits seront ajoutés ici dynamiquement -->
+                        </tbody>
+                    </table>
+                    <div id="no-products" class="empty-state hidden">
+                        <i class="fas fa-box-open empty-icon"></i>
+                        <p>Aucun produit trouvé</p>
+                        <button class="btn btn-primary" onclick="document.getElementById('add-product-btn').click()">
+                            Ajouter le premier produit
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal d'ajout/modification de produit -->
+    <div id="product-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Ajouter un produit</h3>
+                <button id="close-product-modal" class="close-btn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="product-form">
+                    <div class="form-group">
+                        <label for="product-name">Nom du produit *</label>
+                        <input type="text" id="product-name" class="input-field" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="product-barcode">Code-barres *</label>
+                        <input type="text" id="product-barcode" class="input-field" required>
+                        <small class="field-hint">Chiffres uniquement</small>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="product-cost">Prix d'achat (DH) *</label>
+                            <input type="number" id="product-cost" class="input-field" step="0.01" min="0" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="product-price">Prix de vente (DH) *</label>
+                            <input type="number" id="product-price" class="input-field" step="0.01" min="0" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="product-stock">Stock initial</label>
+                        <input type="number" id="product-stock" class="input-field" min="0" value="0">
+                    </div>
+                    <div class="benefit-preview">
+                        <span>Bénéfice unitaire:</span>
+                        <span id="unit-benefit">0.00 DH</span>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="cancel-product" class="btn btn-secondary">Annuler</button>
+                <button type="submit" form="product-form" id="save-product" class="btn btn-success">Sauvegarder</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de confirmation de suppression -->
+    <div id="delete-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Confirmer la suppression</h3>
+                <button id="close-delete-modal" class="close-btn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Êtes-vous sûr de vouloir supprimer ce produit ?</p>
+                <p><strong id="delete-product-name"></strong></p>
+                <p class="warning">Cette action est irréversible.</p>
+            </div>
+            <div class="modal-footer">
+                <button id="cancel-delete" class="btn btn-secondary">Annuler</button>
+                <button id="confirm-delete" class="btn btn-danger">Supprimer</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script src="src/admin.js"></script>
+</body>
+</html>
