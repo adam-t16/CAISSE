@@ -560,8 +560,3 @@ const historique = new HistoriqueApp();
 
 // Make historique globally available for inline event handlers
 window.historique = historique;
-// Initialize historique app
-const historique = new HistoriqueApp();
-
-// Make historique globally available for inline event handlers
-window.historique = historique;
